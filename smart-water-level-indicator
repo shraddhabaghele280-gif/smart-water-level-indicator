@@ -1,0 +1,56 @@
+// Pin Definitions
+int lowLevel = 2;     // Low level sensor
+int midLevel = 3;     // Medium level sensor
+int highLevel = 4;    // High level sensor
+
+int lowLED = 8;
+int midLED = 9;
+int highLED = 10;
+int buzzer = 11;
+
+void setup() {
+  pinMode(lowLevel, INPUT);
+  pinMode(midLevel, INPUT);
+  pinMode(highLevel, INPUT);
+
+  pinMode(lowLED, OUTPUT);
+  pinMode(midLED, OUTPUT);
+  pinMode(highLED, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int low = digitalRead(lowLevel);
+  int mid = digitalRead(midLevel);
+  int high = digitalRead(highLevel);
+
+  // LOW LEVEL
+  if (low == HIGH) {
+    digitalWrite(lowLED, HIGH);
+    Serial.println("Low Level Reached");
+  } else {
+    digitalWrite(lowLED, LOW);
+  }
+
+  // MEDIUM LEVEL
+  if (mid == HIGH) {
+    digitalWrite(midLED, HIGH);
+    Serial.println("Medium Level Reached");
+  } else {
+    digitalWrite(midLED, LOW);
+  }
+
+  // HIGH LEVEL (FULL TANK)
+  if (high == HIGH) {
+    digitalWrite(highLED, HIGH);
+    digitalWrite(buzzer, HIGH); // Alarm ON
+    Serial.println("Tank Full!");
+  } else {
+    digitalWrite(highLED, LOW);
+    digitalWrite(buzzer, LOW);
+  }
+
+  delay(500);
+}
